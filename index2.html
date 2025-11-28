@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Background Image with Properties</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+
+    .background-container {
+      position: relative;
+  width: 100%;
+  height: 100vh;
+      background-image: url('https://cs-citycycle.myshopify.com/cdn/shop/t/6/assets/slide-image-1.jpg?v=60064382086453065951627461828');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+
+    }
+
+    .property-display {
+      position: absolute;
+      top: 0%;
+      width: 100%;
+      background: #161d3b;
+      opacity: 0.8;
+      color: #fff;
+      text-align: center;
+
+      font-size: 12px;
+      width: 100%;
+      padding-bottom: 4px;
+
+
+
+    }
+    h3,p,hr{
+        margin: 0;
+    }
+    h3{
+        padding: 10px;
+    }
+  
+  </style>
+</head>
+<body>
+  <div class="background-container">
+    <div class="property-display">
+        <h3 style="font-size: 18px;">Background Image Applied</h3>
+ 
+        <hr>
+    <div style="padding: 10px; display: flex; gap: 30px; text-align: center; justify-content: center; align-items: center;">
+        <p style="font-size: 17px;">Properties Used:</p>
+        <p><strong>Background image:</strong> url (" ")</p>
+        <p><strong>Background Size:</strong> Cover</p>
+        <p><strong>Background Position:</strong> Center</p>
+        <p><strong>Background Repeat:</strong> no-repeat</p>
+        <p><strong>width:</strong>100%</p>
+        <p><strong>height:</strong>100%</p>
+    </div>
+        <hr>
+    </div>
+  </div>
+</body>
+</html>

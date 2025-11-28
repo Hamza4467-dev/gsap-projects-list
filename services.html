@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spatial UI - Portfolio</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Syne:wght@700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+      :root {
+        --panel-bg: rgba(30, 30, 40, 0.5);
+        --panel-border: rgba(255, 255, 255, 0.1);
+        --panel-glow: rgba(0, 150, 255, 0.5);
+        --text-primary: #e5e5e7;
+        --text-secondary: #9a9aa0;
+        --accent-color: #00aaff;
+        --tag-bg: rgba(0, 170, 255, 0.15);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: url("https://images.unsplash.com/photo-1611640227931-165d5b7803e4?auto=format&fit=crop&w=1920")
+          no-repeat center center fixed;
+        background-size: cover;
+        color: var(--text-primary);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+      }
+      body::before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 1000px;
+        height: 800px;
+        background: radial-gradient(
+          circle,
+          rgba(29, 78, 216, 0.1) 0%,
+          transparent 70%
+        );
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+      }
+
+      .spatial-ui-scene {
+        position: relative;
+        width: 100%;
+        height: 85vh;
+        max-width: 1500px;
+        max-height: 750px;
+        perspective: 2500px;
+      }
+      .scene-container {
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        transition: transform 0.2s ease-out;
+      }
+
+      .ui-panel {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        background: linear-gradient(
+          135deg,
+          rgba(30, 30, 40, 0.65),
+          rgba(20, 20, 30, 0.55)
+        );
+        border: 1px solid var(--panel-border);
+        border-radius: 20px;
+        backdrop-filter: blur(35px);
+        -webkit-backdrop-filter: blur(35px);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        will-change: transform, opacity;
+        opacity: 0;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .panel-header {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid var(--panel-border);
+        flex-shrink: 0;
+      }
+      .panel-header h3 {
+        font-family: "Syne", sans-serif;
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+      }
+
+      .panel-content {
+        padding: 1rem;
+        flex-grow: 1;
+        overflow-y: auto;
+      }
+      .panel-content::-webkit-scrollbar {
+        width: 5px;
+      }
+      .panel-content::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .panel-content::-webkit-scrollbar-thumb {
+        background: var(--panel-border);
+        border-radius: 5px;
+      }
+      .panel-content::-webkit-scrollbar-thumb:hover {
+        background: var(--accent-color);
+      }
+
+      /* Technologies Panel */
+      .tech-list {
+        list-style: none;
+        padding: 0.5rem 0;
+      }
+      .tech-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.9rem 0.5rem;
+        border-radius: 10px;
+        transition: background-color 0.3s ease;
+      }
+      .tech-item:hover {
+        background-color: rgba(255, 255, 255, 0.08);
+      }
+      .tech-item i {
+        font-size: 1.5rem;
+        color: var(--accent-color);
+        flex-shrink: 0;
+        width: 30px;
+        text-align: center;
+      }
+
+      /* Services Panel */
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+      }
+      .service-item {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 12px;
+        padding: 1.5rem 1rem;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border: 1px solid transparent;
+        cursor: pointer;
+      }
+      .service-item:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 0 25px var(--panel-glow);
+        border-color: var(--panel-border);
+      }
+      .service-item i {
+        font-size: 2.5rem;
+        color: var(--accent-color);
+        margin-bottom: 1rem;
+        display: block;
+      }
+      .service-item h4 {
+        font-size: 1.1rem;
+        font-family: "Syne", sans-serif;
+        margin-bottom: 0.75rem;
+        color: var(--text-primary);
+      }
+      .service-item p {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+        line-height: 1.5;
+      }
+
+      /* About Me Panel */
+      .about-content {
+        padding: 0.5rem;
+      }
+      .about-content .bio {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+      }
+      .about-content h4 {
+        font-family: "Syne", sans-serif;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+      }
+      .skills-list {
+        list-style: none;
+      }
+      .skills-list li {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 0.75rem;
+        font-size: 0.9rem;
+      }
+      .skills-list i {
+        font-size: 1.2rem;
+        color: var(--accent-color);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="spatial-ui-scene">
+      <div class="scene-container"></div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const sceneContainer = document.querySelector(".scene-container");
+        const spatialScene = document.querySelector(".spatial-ui-scene");
+
+        if (!sceneContainer || !spatialScene) return;
+
+        const uiData = [
+          {
+            id: "technologies",
+            width: 300,
+            height: 500,
+            position: { x: "16%", y: "50%", z: -100 },
+            rotation: { y: 25 },
+            content: `
+              <div class="panel-header"><h3>Technologies</h3></div>
+              <div class="panel-content">
+                <ul class="tech-list">
+                  <li class="tech-item"><i class="ph-bold ph-react-logo"></i> React & Next.js</li>
+                  <li class="tech-item"><i class="ph-bold ph-file-js"></i> JavaScript & TypeScript</li>
+                  <li class="tech-item"><i class="ph-bold ph-file-css"></i> Advanced CSS & GSAP</li>
+                  <li class="tech-item"><i class="ph-bold ph-figma-logo"></i> Figma</li>
+                  <li class="tech-item"><i class="ph-bold ph-framer-logo"></i> Webflow</li>
+                  <li class="tech-item"><i class="ph-bold ph-database"></i> CMS & Backend</li>
+                </ul>
+              </div>
+            `,
+          },
+          {
+            id: "services",
+            width: 550,
+            height: 650,
+            position: { x: "50%", y: "50%", z: 50 },
+            rotation: { y: 0 },
+            content: `
+              <div class="panel-header"><h3>Services</h3></div>
+              <div class="panel-content">
+                <div class="services-grid">
+                  <div class="service-item">
+                    <i class="ph-bold ph-code"></i>
+                    <h4>Web Development</h4>
+                    <p>Modern, scalable websites and apps using the latest frameworks.</p>
+                  </div>
+                  <div class="service-item">
+                    <i class="ph-bold ph-paint-brush-broad"></i>
+                    <h4>UI/UX Design</h4>
+                    <p>Creating intuitive and delightful user experiences with pixel-perfect design.</p>
+                  </div>
+                  <div class="service-item">
+                    <i class="ph-bold ph-devices"></i>
+                    <h4>Responsive Design</h4>
+                    <p>Seamless user experience across mobile, tablet, and desktop devices.</p>
+                  </div>
+                  <div class="service-item">
+                    <i class="ph-bold ph-lightning"></i>
+                    <h4>Performance Optimization</h4>
+                    <p>Enhancing speed, responsiveness, and accessibility for maximum engagement.</p>
+                  </div>
+                </div>
+              </div>
+            `,
+          },
+          {
+            id: "about",
+            width: 340,
+            height: 550,
+            position: { x: "84%", y: "50%", z: -150 },
+            rotation: { y: -25 },
+            content: `
+              <div class="panel-header"><h3>About Me</h3></div>
+              <div class="panel-content">
+                <div class="about-content">
+                    <p class="bio">I'm a passionate front-end developer and UI/UX designer dedicated to creating functional, user-focused digital experiences.</p>
+                    <h4>Core Skills</h4>
+                    <ul class="skills-list">
+                        <li><i class="ph-fill ph-check-circle"></i> Front-End Development</li>
+                        <li><i class="ph-fill ph-check-circle"></i> UI/UX Design</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Interaction & Animation</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Responsive Design</li>
+                        <li><i class="ph-fill ph-check-circle"></i> Performance Optimization</li>
+                    </ul>
+                </div>
+              </div>
+            `,
+          },
+        ];
+
+        uiData.forEach((panelData, index) => {
+          const panel = document.createElement("div");
+          panel.className = "ui-panel";
+          panel.id = panelData.id + "-panel";
+          panel.style.width = `${panelData.width}px`;
+          panel.style.height = `${panelData.height}px`;
+          panel.innerHTML = panelData.content;
+
+          const { x, y, z } = panelData.position;
+          const { y: rotY } = panelData.rotation;
+
+          const initialTransform = `translateX(-50%) translateY(-50%) translateZ(${
+            z - 100
+          }px) rotateY(${rotY}deg) scale(0.9)`;
+          const finalTransform = `translateX(-50%) translateY(-50%) translateZ(${z}px) rotateY(${rotY}deg) scale(1)`;
+
+          panel.style.top = y;
+          panel.style.left = x;
+
+          gsap.fromTo(
+            panel,
+            { transform: initialTransform, opacity: 0 },
+            {
+              duration: 1.2,
+              delay: 0.2 + index * 0.15,
+              transform: finalTransform,
+              opacity: 1,
+              ease: "power3.out",
+            }
+          );
+
+          sceneContainer.appendChild(panel);
+        });
+
+        spatialScene.addEventListener("mousemove", (e) => {
+          const { clientX, clientY } = e;
+          const { width, height, left, top } =
+            spatialScene.getBoundingClientRect();
+          const rotateX = ((clientY - top) / height - 0.5) * -12;
+          const rotateY = ((clientX - left) / width - 0.5) * 12;
+
+          gsap.to(sceneContainer, {
+            duration: 2,
+            rotationX: rotateX,
+            rotationY: rotateY,
+            ease: "power2.out",
+          });
+        });
+
+        spatialScene.addEventListener("mouseleave", () => {
+          gsap.to(sceneContainer, {
+            duration: 2,
+            rotationX: 0,
+            rotationY: 0,
+            ease: "power2.out",
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

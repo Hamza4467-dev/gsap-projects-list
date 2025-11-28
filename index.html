@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hubfolio - Frontend Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #000;
+        color: white;
+        overflow-x: hidden;
+      }
+      .hero-section,
+      .about-section,
+      .numbers-section,
+      .services-section {
+        min-height: 100vh;
+        background-color: #000;
+        background-image: radial-gradient(
+          circle at 1px 1px,
+          rgba(255, 255, 255, 0.1) 1px,
+          transparent 1px
+        );
+        background-size: 40px 40px;
+      }
+      .text-4xl-custom {
+        font-size: 4rem;
+      }
+      .text-7xl-custom {
+        font-size: 8rem;
+        line-height: 1;
+      }
+      .text-5xl-custom {
+        font-size: 5rem;
+        line-height: 1;
+      }
+      .font-light-italic {
+        font-style: italic;
+        font-weight: 300;
+      }
+      .logo-scroll {
+        white-space: nowrap;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+      }
+      .logo-scroll-inner {
+        display: flex;
+        animation: scroll-logos 20s linear infinite;
+      }
+      .logo-scroll-inner img {
+        height: 30px;
+        margin-right: 2rem;
+        filter: grayscale(100%) brightness(200%);
+        opacity: 0.7;
+      }
+      @keyframes scroll-logos {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-100%);
+        }
+      }
+      #three-canvas {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+        opacity: 0.2;
+        pointer-events: none;
+      }
+      .animated-shape {
+        width: 250px;
+        height: 250px;
+        background-color: #1a1a1a;
+        border-radius: 50px;
+        clip-path: polygon(
+          50% 0%,
+          100% 25%,
+          100% 75%,
+          50% 100%,
+          0% 75%,
+          0% 25%
+        );
+        animation: shape-animation 10s ease-in-out infinite;
+      }
+      @keyframes shape-animation {
+        0% {
+          transform: rotate(0deg) scale(1);
+          border-radius: 50px;
+        }
+        50% {
+          transform: rotate(180deg) scale(1.1);
+          border-radius: 20px;
+        }
+        100% {
+          transform: rotate(360deg) scale(1);
+          border-radius: 50px;
+        }
+      }
+      @media (max-width: 768px) {
+        .text-7xl-custom {
+          font-size: 4rem;
+        }
+        .text-5xl-custom {
+          font-size: 3rem;
+        }
+        .text-4xl-custom {
+          font-size: 2rem;
+        }
+        .main-content {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        .main-text {
+          margin-top: 2rem;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-black text-white">
+    <!-- Navbar -->
+    <header
+      class="w-full flex justify-between items-center py-6 px-8 fixed top-0 left-0 z-50"
+    >
+      <a href="#home" class="flex items-center space-x-2">
+        <svg
+          class="w-8 h-8 text-white"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16m-7 6h7"
+          ></path>
+        </svg>
+        <span class="font-bold text-2xl">Hubfolio</span>
+      </a>
+      <nav class="hidden md:flex items-center space-x-6">
+        <a href="#home" class="text-sm font-medium hover:text-gray-400">Home</a>
+        <a href="#about" class="text-sm font-medium hover:text-gray-400"
+          >About</a
+        >
+        <a href="#services" class="text-sm font-medium hover:text-gray-400"
+          >Services</a
+        >
+        <a href="#works" class="text-sm font-medium hover:text-gray-400"
+          >Works</a
+        >
+        <a href="#news" class="text-sm font-medium hover:text-gray-400">News</a>
+      </nav>
+      <div class="flex items-center space-x-4">
+        <button
+          class="bg-white text-black font-medium py-2 px-4 rounded-full text-sm hover:bg-gray-200 transition-colors"
+        >
+          Start Project <span class="ml-2">&#8599;</span>
+        </button>
+        <button
+          class="bg-gray-800 text-white p-2 rounded-full hover:bg-gray-700 transition-colors"
+        >
+          <svg
+            class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Canvas for 3D sphere -->
+    <canvas id="three-canvas"></canvas>
+
+    <!-- Hero Section -->
+    <main
+      id="home"
+      class="hero-section flex flex-col justify-between p-8 pt-16 relative z-10"
+    >
+      <div
+        class="container mx-auto flex flex-col md:flex-row items-center justify-between main-content"
+      >
+        <!-- Left Content -->
+        <div class="w-full md:w-1/2 flex flex-col items-start space-y-4">
+          <p class="text-xl text-gray-400 max-w-sm">
+            Specializing in High-Performance Web Applications
+          </p>
+          <div class="relative w-12 h-12">
+            <svg
+              class="absolute inset-0"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 14l-7 7m0 0l-7-7m7 7V3"
+              ></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Main Title and Text -->
+        <div
+          class="w-full md:w-1/2 flex flex-col items-start md:items-end text-right main-text"
+        >
+          <h1 class="text-7xl-custom font-bold">FRONTEND</h1>
+          <h2 class="text-5xl-custom font-light-italic">engineer</h2>
+          <ul class="text-gray-400 text-sm md:text-base mt-8 list-none">
+            <li class="flex items-center md:justify-end space-x-2">
+              <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+              <span>HIGH-PERFORMANCE WEB APPS</span>
+            </li>
+            <li class="flex items-center md:justify-end space-x-2 mt-2">
+              <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+              <span>ANGULAR & REACT DEVELOPMENT</span>
+            </li>
+            <li class="flex items-center md:justify-end space-x-2 mt-2">
+              <span class="w-1.5 h-1.5 bg-white rounded-full"></span>
+              <span>SCALABLE UI/UX SYSTEMS</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Client Logos -->
+      <div class="w-full flex flex-col items-center mt-auto">
+        <p class="text-gray-500 text-sm mb-4">Trusted by the best companies:</p>
+        <div class="w-full logo-scroll">
+          <div class="logo-scroll-inner">
+            <img
+              src="https://placehold.co/100x30/000000/ffffff?text=Brand"
+              alt="Brand Logo"
+            />
+            <img
+              src="https://placehold.co/100x30/000000/ffffff?text=UDIX"
+              alt="UDIX Logo"
+            />
+            <img
+              src="https://placehold.co/100x30/000000/ffffff?text=matthew"
+              alt="Matthew Logo"
+            />
+            <img
+              src="https://placehold.co/100x30/000000/ffffff?text=ZUMAR+CONS"
+              alt="Zumar Cons Logo"
+            />
+            <img
+              src="https://placehold.co/100x30/000000/ffffff?text=USA+INTERIOR+DESIGN"
+              alt="USA Interior Design Logo"
+            />
+            <!-- Duplicate logos for seamless scroll -->
+            <img
+              src="https://placehold.co/100x30/000000/ffffff?text=Brand"
+              alt="Brand Logo"
+            />
+            <img
+              src="https://placehold.co/100x30/000000/ffffff?text=UDIX"
+              alt="UDIX Logo"
+            />
+            <img
+              src="https://placehold.co/100x30/000000/ffffff?text=matthew"
+              alt="Matthew Logo"
+            />
+            <img
+              src="https://placehold.co/100x30/000000/ffffff?text=ZUMAR+CONS"
+              alt="Zumar Cons Logo"
+            />
+            <img
+              src="https://placehold.co/100x30/000000/ffffff?text=USA+INTERIOR+DESIGN"
+              alt="USA Interior Design Logo"
+            />
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- About Section - New Design -->
+    <section
+      id="about"
+      class="about-section flex flex-col items-center justify-center p-8 text-center md:text-left"
+    >
+      <div class="container mx-auto max-w-5xl">
+        <div
+          class="flex flex-col md:flex-row items-start justify-between space-y-8 md:space-y-0 md:space-x-16"
+        >
+          <!-- Left: Our Services Label -->
+          <div class="md:w-1/3 flex items-center md:justify-start">
+            <div class="text-gray-400 text-sm md:text-base flex items-center">
+              <span class="w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
+              About Me
+            </div>
+          </div>
+          <!-- Right: Bold Heading and Content -->
+          <div class="md:w-2/3">
+            <h1
+              class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-8"
+            >
+              I am a frontend engineer with
+              <span class="text-gray-400">4 years of experience</span>, crafting
+              high-performance and memorable digital experiences.
+            </h1>
+            <p class="text-gray-400 text-lg mb-10 leading-relaxed">
+              My journey in web development is driven by a passion for solving
+              complex problems and a dedication to building with purpose. I
+              believe in writing clean, scalable code that not only functions
+              flawlessly but also provides a seamless and intuitive experience
+              for every user. My expertise spans a wide range of technologies,
+              from modern JavaScript frameworks to robust UI/UX systems.
+            </p>
+            <a
+              href="#contact"
+              class="inline-block border-2 border-white text-white font-medium py-3 px-8 rounded-full text-sm hover:bg-white hover:text-black transition-colors"
+            >
+              Get In Touch <span class="ml-2">&#8599;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Numbers Section -->
+    <section
+      id="numbers"
+      class="numbers-section flex flex-col items-center justify-center p-8"
+    >
+      <div class="container mx-auto max-w-4xl text-center">
+        <h1 class="text-5xl font-bold mb-16">Data That Speaks For Itself</h1>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Metric 1: Projects Completed -->
+          <div
+            class="p-8 bg-gray-900 rounded-2xl shadow-xl flex flex-col items-center text-center"
+          >
+            <div
+              class="w-16 h-16 mb-4 flex items-center justify-center bg-gray-800 rounded-full"
+            >
+              <svg
+                class="w-8 h-8 text-green-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
+            </div>
+            <h2 class="text-6xl font-extrabold mb-2">95+</h2>
+            <p class="text-gray-400">Successfully Completed Projects</p>
+            <p class="text-sm text-gray-500 mt-2">
+              I take pride in delivering robust and reliable solutions on time
+              and within scope.
+            </p>
+          </div>
+          <!-- Metric 2: Client Satisfaction -->
+          <div
+            class="p-8 bg-gray-900 rounded-2xl shadow-xl flex flex-col items-center text-center"
+          >
+            <div
+              class="w-16 h-16 mb-4 flex items-center justify-center bg-gray-800 rounded-full"
+            >
+              <svg
+                class="w-8 h-8 text-blue-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21H8.623a2 2 0 01-1.789-2.894l3.5-7A2 2 0 0112 11h2z"
+                ></path>
+              </svg>
+            </div>
+            <h2 class="text-6xl font-extrabold mb-2">92%</h2>
+            <p class="text-gray-400">Client Satisfaction Rate</p>
+            <p class="text-sm text-gray-500 mt-2">
+              My focus is on understanding client goals to build solutions that
+              truly exceed expectations.
+            </p>
+          </div>
+          <!-- Metric 3: Years of Experience -->
+          <div
+            class="p-8 bg-gray-900 rounded-2xl shadow-xl flex flex-col items-center text-center"
+          >
+            <div
+              class="w-16 h-16 mb-4 flex items-center justify-center bg-gray-800 rounded-full"
+            >
+              <svg
+                class="w-8 h-8 text-purple-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                ></path>
+              </svg>
+            </div>
+            <h2 class="text-6xl font-extrabold mb-2">4+</h2>
+            <p class="text-gray-400">Years of Industry Experience</p>
+            <p class="text-sm text-gray-500 mt-2">
+              Bringing a wealth of knowledge and expertise to every new
+              challenge and project.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services Section -->
+    <section
+      id="services"
+      class="services-section flex flex-col items-center justify-center p-8 text-center md:text-left"
+    >
+      <div class="container mx-auto max-w-5xl">
+        <div
+          class="flex flex-col md:flex-row items-start justify-between space-y-8 md:space-y-0 md:space-x-16"
+        >
+          <!-- Left: Our Services Label -->
+          <div class="md:w-1/3 flex items-center md:justify-start">
+            <div class="text-gray-400 text-sm md:text-base flex items-center">
+              <span class="w-2 h-2 bg-gray-400 rounded-full mr-2"></span>
+              Our Services
+            </div>
+          </div>
+          <!-- Right: Bold Heading and Content -->
+          <div class="md:w-2/3">
+            <h1
+              class="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-8"
+            >
+              As a tight-knit team of experts, we create
+              <span class="text-gray-400">memorable and emotional websites</span
+              >, digital experiences, and native apps.
+            </h1>
+            <p class="text-gray-400 text-lg mb-10 leading-relaxed">
+              We believe that the best digital products are a blend of creative
+              design, robust engineering, and a deep understanding of user
+              needs. My services are centered around building solutions that not
+              only look great but also deliver real business value and an
+              exceptional user experience.
+            </p>
+            <a
+              href="#contact"
+              class="inline-block border-2 border-white text-white font-medium py-3 px-8 rounded-full text-sm hover:bg-white hover:text-black transition-colors"
+            >
+              Learn More <span class="ml-2">&#8599;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      window.onload = function () {
+        const canvas = document.getElementById("three-canvas");
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(
+          75,
+          window.innerWidth / window.innerHeight,
+          0.1,
+          1000
+        );
+        const renderer = new THREE.WebGLRenderer({
+          canvas: canvas,
+          antialias: true,
+          alpha: true,
+        });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        // Create an abstract, textured sphere
+        const geometry = new THREE.IcosahedronGeometry(2, 5);
+        const material = new THREE.MeshPhongMaterial({
+          color: 0x444444,
+          specular: 0x222222,
+          shininess: 10,
+          flatShading: true,
+          wireframe: false,
+        });
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+
+        // Add lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
+        directionalLight.position.set(5, 5, 5).normalize();
+        scene.add(directionalLight);
+
+        camera.position.z = 5;
+
+        // Simple animation loop
+        const animate = function () {
+          requestAnimationFrame(animate);
+
+          sphere.rotation.x += 0.0005;
+          sphere.rotation.y += 0.0005;
+
+          renderer.render(scene, camera);
+        };
+
+        // Handle window resize
+        function onWindowResize() {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+        window.addEventListener("resize", onWindowResize);
+
+        animate();
+      };
+    </script>
+  </body>
+</html>

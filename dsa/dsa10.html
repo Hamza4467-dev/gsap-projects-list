@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Head and tail recursion</title>
+  <script>
+    function test(x) {
+      // console.log(x)  // head recursion mean top print 
+      if (x > 0) {
+        test(x - 1)
+      }
+      // console.log(x)   tail recursion mean bottm print 
+    }
+    test(5)
+    // function colors() {
+    //   let data = 20;
+    //   console.log(data)
+    // }
+    // function days() {
+    //   colors()
+    // }
+    // function fruits() {
+    //   days()
+    // }
+    // function topFun() {
+    //   fruits()
+    // }
+    // topFun()
+  </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

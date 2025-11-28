@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SportFanta – Premium Fantasy Football</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              primary: ["Montserrat", "sans-serif"],
+            },
+            colors: {
+              primary: "#41cd90",
+              secondary: "#5a5990",
+              mediumGray: "#5e5e5e",
+              brightRed: "#ff3434",
+              heading: "#505050",
+              textPrimary: "#1e1e1e",
+              textColor: "#999999",
+              davyGrey: "#555",
+              bgMain: "#f3fff6",
+              bgLight: "#ebfff6",
+              bgPale: "#f3fffa",
+              offWhite: "#f9f9f9e8",
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Holographic gradient overlay */
+      .holo-overlay {
+        background: radial-gradient(
+          circle at 30% 20%,
+          rgba(65, 205, 144, 0.5),
+          rgba(90, 89, 144, 0.5),
+          rgba(0, 0, 0, 0.7)
+        );
+      }
+
+      /* Floating bokeh particles */
+      .bokeh::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("https://i.imgur.com/o7zW9xM.png"); /* Soft bokeh transparent PNG */
+        opacity: 0.4;
+        pointer-events: none;
+      }
+
+      /* Light streak FX */
+      .light-streak {
+        background: linear-gradient(
+          120deg,
+          rgba(65, 205, 144, 0.15),
+          rgba(90, 89, 144, 0.15),
+          rgba(255, 255, 255, 0)
+        );
+        filter: blur(40px);
+      }
+    </style>
+  </head>
+
+  <body class="font-primary bg-bgMain text-textPrimary">
+    <!-- =============================== -->
+    <!-- HERO SECTION (CINEMATIC) -->
+    <!-- =============================== -->
+    <section class="relative h-[90vh] w-full overflow-hidden">
+      <!-- Stadium Background -->
+      <div class="absolute inset-0">
+        <img
+          src="https://images.unsplash.com/photo-1605721911519-3dfb88f7c8c8?auto=format&fit=crop&w=2100&q=60"
+          class="w-full h-full object-cover"
+        />
+      </div>
+
+      <!-- Holographic Gradient Overlay -->
+      <div class="absolute inset-0 holo-overlay opacity-80"></div>
+
+      <!-- Bokeh Lights -->
+      <div class="absolute inset-0 bokeh opacity-60"></div>
+
+      <!-- Light Streak -->
+      <div class="absolute top-0 left-0 w-full h-1/2 light-streak"></div>
+
+      <!-- Content -->
+      <div
+        class="absolute inset-0 flex flex-col items-center justify-center text-white px-6 text-center"
+      >
+        <h1 class="text-5xl lg:text-7xl font-bold drop-shadow-xl">
+          BUILD YOUR DYNASTY
+        </h1>
+        <p class="mt-4 max-w-2xl text-lg lg:text-xl opacity-90">
+          The next-generation fantasy football platform with holographic
+          insights, global competitions, and real-time stats.
+        </p>
+
+        <div class="mt-8 flex gap-4">
+          <a
+            href="#"
+            class="px-8 py-3 rounded-full bg-primary text-white font-semibold shadow-lg shadow-primary/40 hover:shadow-primary/60 transition"
+          >
+            Start Season
+          </a>
+
+          <a
+            href="#"
+            class="px-8 py-3 rounded-full border border-white/40 text-white font-semibold backdrop-blur-lg hover:bg-white/10 transition"
+          >
+            How It Works
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================== -->
+    <!-- 3-STEP INTRO -->
+    <!-- =============================== -->
+    <section class="py-20 px-6 lg:px-20">
+      <h2 class="text-3xl font-bold text-center text-heading">How It Works</h2>
+
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Card -->
+        <div
+          class="p-8 rounded-3xl bg-white shadow-xl backdrop-blur-xl bg-white/60"
+        >
+          <h3 class="text-xl font-semibold mb-3">Pick Your Squad</h3>
+          <p class="text-textColor">
+            Build your dream team with powerful stats & insights.
+          </p>
+        </div>
+
+        <div
+          class="p-8 rounded-3xl bg-white shadow-xl backdrop-blur-xl bg-white/60"
+        >
+          <h3 class="text-xl font-semibold mb-3">Join Leagues</h3>
+          <p class="text-textColor">
+            Play with friends or challenge global fantasy managers.
+          </p>
+        </div>
+
+        <div
+          class="p-8 rounded-3xl bg-white shadow-xl backdrop-blur-xl bg-white/60"
+        >
+          <h3 class="text-xl font-semibold mb-3">Compete & Win</h3>
+          <p class="text-textColor">
+            Dominate weekly and seasonal leaderboards.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================== -->
+    <!-- RULES -->
+    <!-- =============================== -->
+    <section class="py-20 bg-bgLight px-6 lg:px-20">
+      <h2 class="text-3xl font-bold mb-10 text-heading">Regolamento (Rules)</h2>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        <div>
+          <ul class="space-y-4 text-lg text-davyGrey">
+            <li>• Market Values</li>
+            <li>• Game Rules</li>
+            <li>• Competitions</li>
+            <li>• Substitutions</li>
+            <li>• Scoring System</li>
+          </ul>
+        </div>
+
+        <div
+          class="bg-white/70 shadow-2xl rounded-3xl p-12 text-center backdrop-blur-xl"
+        >
+          <span class="text-6xl">⚽️</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================== -->
+    <!-- PRIZES -->
+    <!-- =============================== -->
+    <section
+      class="py-24 px-6 lg:px-20 bg-gradient-to-br from-secondary to-black text-white"
+    >
+      <h2 class="text-3xl font-bold text-center">Elite Rewards</h2>
+
+      <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div
+          class="p-10 rounded-3xl bg-white/10 shadow-lg backdrop-blur-xl text-center"
+        >
+          <h3 class="text-xl font-semibold mb-3">Season Champion</h3>
+          <p class="opacity-80">Premium trophy + exclusive rewards</p>
+        </div>
+
+        <div
+          class="p-10 rounded-3xl bg-white/10 shadow-lg backdrop-blur-xl text-center"
+        >
+          <h3 class="text-xl font-semibold mb-3">Weekly Winner</h3>
+          <p class="opacity-80">Win prizes every single week</p>
+        </div>
+
+        <div
+          class="p-10 rounded-3xl bg-white/10 shadow-lg backdrop-blur-xl text-center"
+        >
+          <h3 class="text-xl font-semibold mb-3">Monthly Elite</h3>
+          <p class="opacity-80">Top monthly performers earn rewards</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================== -->
+    <!-- FINAL CTA -->
+    <!-- =============================== -->
+    <section
+      class="py-24 px-6 text-center bg-gradient-to-b from-black to-secondary text-white"
+    >
+      <h2 class="text-4xl font-bold mb-6">Prove Your Intellect.</h2>
+      <a
+        class="px-10 py-4 rounded-full bg-primary shadow-primary/50 shadow-lg text-white font-semibold hover:bg-primary/90 transition"
+        href="#"
+      >
+        Join Now
+      </a>
+    </section>
+  </body>
+</html>

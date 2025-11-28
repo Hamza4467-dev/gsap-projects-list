@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invitation Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Open Sans", system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+        background-color: #f8fafc;
+        color: #030712;
+        margin: 0;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: "Roboto", sans-serif;
+        color: #030712;
+        margin-bottom: 0;
+        margin: 0;
+      }
+
+      .container-wrapper {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      .header {
+        margin-bottom: 32px;
+      }
+
+      .main-title {
+        font-size: 30px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      .subtitle {
+        font-size: 18px;
+        color: #4b5563;
+        font-size: 18px;
+        color: #4b5563;
+        padding: 0;
+        margin: 0;
+      }
+
+      .main-content {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 32px;
+        border-radius: 8px;
+
+        border: none;
+        background-color: #eef4fd;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        padding: 30px;
+      }
+
+      @media (min-width: 1024px) {
+        .main-content {
+          grid-template-columns: 1fr 3fr;
+        }
+      }
+
+      .subscription-card,
+      .invitation-card {
+        border-radius: 8px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        border: none;
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+      }
+
+      .invitation-card:hover {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      }
+
+      .card-header,
+      .card-body {
+        padding: 24px;
+      }
+
+      .card-header {
+        padding-bottom: 16px;
+      }
+
+      .card-header h3 {
+        font-size: 18px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
+      }
+
+      .card-header h3 .icon {
+        width: 20px;
+        height: 20px;
+        color: #2563eb;
+      }
+
+      .subscription-details {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .detail-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 14px;
+      }
+
+      .detail-item span:first-child {
+        color: #4b5563;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .font-medium {
+        font-weight: 500;
+        color: #030712;
+      }
+
+      .divider {
+        border: 0;
+        height: 1px;
+        background-color: #e5e7eb;
+        margin: 24px 0;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 9999px;
+        border: 1px solid transparent;
+        padding: 2px 10px;
+        font-size: 12px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        text-transform: capitalize;
+      }
+
+      .premium-badge {
+        background-color: #f59e0b;
+        color: white;
+      }
+
+      .premium-badge:hover {
+        background-color: #d97706;
+      }
+
+      .admin-badge {
+        background-color: #dbeafe;
+        color: #1e40af;
+      }
+
+      .admin-badge:hover {
+        background-color: #bfdbfe;
+      }
+
+      .accepted-badge {
+        background-color: #d1fae5;
+        color: #065f46;
+      }
+      .accepted-badge:hover {
+        background-color: #a7f3d0;
+      }
+
+      .pending-badge {
+        background-color: #fef3c7;
+        color: #92400e;
+      }
+      .pending-badge:hover {
+        background-color: #fde68a;
+      }
+
+      .rejected-badge {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+      .rejected-badge:hover {
+        background-color: #fecaca;
+      }
+
+      /* Button Styling */
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        white-space: nowrap;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: 500;
+        height: 40px;
+        padding: 0 16px;
+        width: 100%;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+
+      .cancel-btn {
+        border: 1px solid #fecaca;
+        color: #dc2626;
+        background-color: transparent;
+      }
+
+      .cancel-btn:hover {
+        background-color: #fef2f2;
+        border-color: #fca5a5;
+      }
+
+      .buy-btn {
+        background-color: #2563eb;
+        color: white;
+        border: none;
+      }
+      .invitation-card:hover .buy-btn {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      }
+      .buy-btn:hover {
+        background-color: #1d4ed8;
+      }
+
+      .invitation-header-card {
+        padding: 24px;
+        background-color: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(10px);
+        border-radius: 12px;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        margin-bottom: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      @media (min-width: 640px) {
+        .invitation-header-card {
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+        }
+      }
+
+      .invitation-id h2 {
+        font-size: 18px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
+      }
+
+      .invitation-date {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #4b5563;
+        font-size: 14px;
+      }
+
+      .invitations-grid {
+        display: grid;
+        gap: 24px;
+      }
+
+      @media (min-width: 768px) {
+        .invitations-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1280px) {
+        .invitations-grid {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      .invitation-card .card-body {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .invitation-card {
+        cursor: pointer;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 9999px;
+        background-image: linear-gradient(to bottom right, #3b82f6, #1e40af);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .user-name {
+        font-family: "Roboto", sans-serif;
+        font-weight: 600;
+        color: #111827;
+        margin: 0;
+      }
+
+      .user-email {
+        font-size: 14px;
+        color: #4b5563;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 0;
+        margin: 3px 0;
+      }
+
+      .invitation-details {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .icon {
+        width: 18px;
+        height: 18px;
+      }
+      .icon-small {
+        width: 16px;
+        height: 16px;
+      }
+      .icon-tiny {
+        width: 12px;
+        height: 12px;
+      }
+
+      .icon-white {
+        width: 20px;
+        height: 20px;
+        color: white;
+      }
+
+      .premium-badge .icon-small {
+        margin-right: 4px;
+      }
+
+      /* top header-card */
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .left-card-info .subscription-details {
+        gap: 15px;
+      }
+
+      .left-card-info .divider {
+        border: 0;
+        height: 1px;
+        background-color: #e5e7eb;
+        margin: 21px 0;
+      }
+      .left-card-info {
+        width: 49%;
+      }
+      .right-card-info {
+        width: 49%;
+      }
+
+      .notice-box {
+        background-color: rgba(255, 247, 237, 0.5);
+        border: 1px solid #fdba74;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+        max-width: 100%;
+        margin-bottom: 32px;
+      }
+
+      .notice-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 24px 24px 16px 24px;
+      }
+
+      .notice-header h3 {
+        font-size: 18px;
+        font-weight: 600;
+        color: #030712;
+        margin: 0;
+      }
+
+      .notice-body {
+        padding: 0 24px 24px 24px;
+      }
+
+      .notice-text {
+        font-size: 14px;
+        color: #030712;
+      }
+
+      .notice-text p {
+        margin: 4px 0;
+      }
+
+      .bold {
+        font-weight: 600;
+      }
+
+      .amount-due {
+        font-weight: 700;
+        padding: 10px 0;
+        font-size: 24px;
+        line-height: 32px;
+      }
+
+      .notice-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .page-header svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .w-50 {
+        width: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container-wrapper">
+      <div class="header">
+        <h1 class="main-title">Invitation Management</h1>
+        <p class="subtitle">Manage your AI invitations</p>
+      </div>
+      <div class="page-header">
+        <div class="left-card-info">
+          <aside class="sidebar">
+            <div class="card subscription-card">
+              <div class="card-body">
+                <div class="subscription-details">
+                  <div class="detail-item">
+                    <span>Subscription Type:</span>
+                    <span class="badge premium-badge">
+                      <svg
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="icon-small"
+                      >
+                        <polygon
+                          points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                        ></polygon>
+                      </svg>
+                      Premium
+                    </span>
+                  </div>
+
+                  <div class="detail-item">
+                    <span>Next Billing:</span
+                    ><span class="font-medium">03/07/2025</span>
+                  </div>
+                  <div class="detail-item">
+                    <span>Expiry Date:</span
+                    ><span class="font-medium">07/03/2026</span>
+                  </div>
+                </div>
+                <hr class="divider" />
+                <button class="btn cancel-btn">Cancel Subscription</button>
+              </div>
+            </div>
+          </aside>
+        </div>
+        <div class="right-card-info">
+          <div class="notice-box">
+            <div class="notice-header">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                stroke="#ea580c"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                viewBox="0 0 24 24"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <h3>Pending Payment Notice</h3>
+            </div>
+
+            <div class="notice-body">
+              <div class="notice-text">
+                <p>
+                  You have an outstanding
+                  <span class="bold">invoice #5</span> for the period
+                  <span class="bold">Jun 30, 2025</span> to
+                  <span class="bold">Jul 2, 2025</span>.
+                </p>
+                <p class="amount-due">Amount Due: $17.50</p>
+              </div>
+
+              <div class="notice-actions">
+                <button class="btn buy-btn w-50">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    viewBox="0 0 24 24"
+                  >
+                    <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+                    <line x1="2" y1="10" x2="22" y2="10"></line>
+                  </svg>
+                  Pay Now
+                </button>
+
+                <button class="btn cancel-btn w-50">Cancel Subscription</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="header">
+        <h1 class="main-title">Invitation Management</h1>
+      </div>
+      <div class="main-content">
+        <!-- subscription-sidebar-card start -->
+        <aside class="sidebar">
+          <div class="card subscription-card">
+            <div class="card-header">
+              <h3>
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="icon"
+                >
+                  <rect width="20" height="14" x="2" y="5" rx="2"></rect>
+                  <line x1="2" x2="22" y1="10" y2="10"></line>
+                </svg>
+                Subscription Details
+              </h3>
+            </div>
+            <div class="card-body">
+              <div class="subscription-details">
+                <div class="detail-item">
+                  <span>Subscription Type:</span>
+                  <span class="badge premium-badge">
+                    <svg
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="icon-small"
+                    >
+                      <polygon
+                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                      ></polygon>
+                    </svg>
+                    Premium
+                  </span>
+                </div>
+                <div class="detail-item">
+                  <span>Plan:</span><span class="font-medium">Yearly</span>
+                </div>
+                <div class="detail-item">
+                  <span>Start Date:</span
+                  ><span class="font-medium">03/07/2025</span>
+                </div>
+                <div class="detail-item">
+                  <span>End Date:</span
+                  ><span class="font-medium">07/03/2026</span>
+                </div>
+                <div class="detail-item">
+                  <span>Payer:</span
+                  ><span class="badge admin-badge">Admin</span>
+                </div>
+              </div>
+              <hr class="divider" />
+              <button class="btn cancel-btn">Cancel Subscription</button>
+            </div>
+          </div>
+        </aside>
+        <!-- subscription-sidebar-card end -->
+
+        <div
+          class="content"
+          style="overflow-y: auto; max-height: 380px; scroll-behavior: smooth"
+        >
+          <div class="invitation-header-card">
+            <div class="invitation-id">
+              <h2>
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="icon"
+                >
+                  <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+                </svg>
+                Invitation ID: 202654
+              </h2>
+            </div>
+            <div class="invitation-date">
+              <svg
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="icon-small"
+              >
+                <path d="M8 2v4"></path>
+                <path d="M16 2v4"></path>
+                <rect width="18" height="18" x="3" y="4" rx="2"></rect>
+                <path d="M3 10h18"></path>
+              </svg>
+              <span>Send Date: 20/05/2026</span>
+            </div>
+          </div>
+
+          <div class="invitations-grid">
+            <!-- loop cards start -->
+            <div class="invitation-card">
+              <div class="card-body">
+                <div class="user-info">
+                  <div class="user-avatar">
+                    <svg
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="icon-white"
+                    >
+                      <path
+                        d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"
+                      ></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                  </div>
+                  <div>
+                    <p class="user-name">usama ilyas</p>
+                    <p class="user-email">
+                      <svg
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="icon-tiny"
+                      >
+                        <rect width="20" height="16" x="2" y="4" rx="2"></rect>
+                        <path
+                          d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"
+                        ></path>
+                      </svg>
+                      usama@gmail.com
+                    </p>
+                  </div>
+                </div>
+                <div class="invitation-details">
+                  <div class="detail-item">
+                    <span
+                      ><svg
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="icon-tiny"
+                      >
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline></svg
+                      >Accept Date:</span
+                    >
+                    <span class="font-medium">03/07/2025</span>
+                  </div>
+                  <div class="detail-item">
+                    <span>Status:</span>
+                    <span class="badge accepted-badge">accepted</span>
+                  </div>
+                  <div class="detail-item">
+                    <span
+                      ><svg
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="icon-tiny"
+                      >
+                        <path
+                          d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                        ></path></svg
+                      >Phone Link:</span
+                    >
+                    <span class="font-medium">No</span>
+                  </div>
+                </div>
+                <button class="btn buy-btn">Buy Token</button>
+              </div>
+            </div>
+
+            <!-- loop cards end -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

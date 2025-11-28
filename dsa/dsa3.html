@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>merge two array in js</title>
+</head>
+
+<body>
+
+  <script>
+    let a = [1, 2, 3];
+    let b = [4, 5, 6];
+    let c = []
+
+
+    // for (let i = 0; i < a.length; i++) {
+    //   c.push(a[i])
+    // }
+    // for (let i = 0; i < b.length; i++) {
+    //   c.push(b[i])
+    // }
+    c = [...a, ...b]
+    console.log(c)
+  </script>
+</body>
+
+</html>

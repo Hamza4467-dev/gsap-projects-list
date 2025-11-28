@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SportFanta | Premium Fantasy Football</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Montserrat", "sans-serif"],
+            },
+            colors: {
+              primary: "#41cd90" /* Mint */,
+              secondary: "#5a5990" /* Purple */,
+              gray: {
+                medium: "#5e5e5e",
+                light: "#f1f1f1",
+                text: "#999999",
+              },
+              heading: "#505050",
+              text: {
+                main: "#1e1e1e",
+                davy: "#555555",
+              },
+              bg: {
+                main: "#f3fff6",
+                lightGreen: "#ebfff6",
+                paleCyan: "#f3fffa",
+                offWhite: "#f9f9f9e8",
+                custom: "rgba(195, 255, 230, 0.3)",
+              },
+              red: {
+                bright: "#ff3434",
+              },
+              gold: "#fbbf24",
+            },
+            backgroundImage: {
+              "hero-gradient":
+                "linear-gradient(135deg, #f3fff6 0%, #ebfff6 100%)",
+              "luxury-gradient":
+                "linear-gradient(135deg, #41cd90 0%, #5a5990 100%)",
+              "card-white": "linear-gradient(180deg, #ffffff 0%, #f9f9f9 100%)",
+              "gold-metallic":
+                "linear-gradient(135deg, #BF953F 0%, #FCF6BA 50%, #B38728 100%)",
+              "silver-metallic":
+                "linear-gradient(135deg, #E0E0E0 0%, #FFFFFF 50%, #A0A0A0 100%)",
+              "bronze-metallic":
+                "linear-gradient(135deg, #CD7F32 0%, #FFC194 50%, #8B4513 100%)",
+            },
+            boxShadow: {
+              soft: "0 10px 40px -10px rgba(90, 89, 144, 0.15)",
+              card: "0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)",
+              premium:
+                "0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.01)",
+              "glow-mint": "0 0 20px rgba(65, 205, 144, 0.4)",
+            },
+            animation: {
+              float: "float 6s ease-in-out infinite",
+              "pulse-slow": "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+            },
+            keyframes: {
+              float: {
+                "0%, 100%": { transform: "translateY(0)" },
+                "50%": { transform: "translateY(-15px)" },
+              },
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      /* Smooth Scrolling */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Glassmorphism for Light Theme */
+      .glass-panel {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      /* Gradient Text */
+      .text-gradient {
+        background: linear-gradient(90deg, #5a5990 0%, #41cd90 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* Abstract Pattern Background */
+      .bg-pattern {
+        background-color: transparent;
+        background-image: radial-gradient(#41cd90 0.5px, transparent 0.5px),
+          radial-gradient(#41cd90 0.5px, transparent 0.5px);
+        background-size: 30px 30px;
+        background-position: 0 0, 15px 15px;
+        opacity: 0.2;
+      }
+    </style>
+  </head>
+  <body
+    class="font-sans text-text-main bg-bg-main antialiased overflow-x-hidden selection:bg-primary selection:text-white"
+  >
+    <!-- NAVIGATION: Updated with SportFanta Logo -->
+    <nav
+      class="fixed w-full z-50 top-0 transition-all duration-300 glass-panel shadow-sm"
+    >
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+          <!-- Brand Logo -->
+          <div class="flex items-center gap-2 cursor-pointer">
+            <!-- Placeholder for SportFanta Logo Image -->
+            <div class="flex flex-col items-center leading-none">
+              <i class="fa-solid fa-futbol text-primary text-3xl mb-1"></i>
+              <!-- <span class="text-lg font-bold text-gray-medium tracking-tight"
+                >SPORT<span class="text-primary">FANTA</span
+                ><span
+                  class="text-gray-400 text-[10px] block uppercase tracking-widest"
+                  >Football Game</span
+                ></span
+              > -->
+              <div class="flex items-center gap-3">
+                <img src="Logo.png" width="150px" alt="" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Links -->
+          <div
+            class="hidden md:flex items-center gap-8 font-semibold text-sm tracking-wide text-heading"
+          >
+            <a href="#" class="hover:text-primary transition-colors">LEAGUES</a>
+            <a href="#" class="hover:text-primary transition-colors">SCOUT</a>
+            <a href="#" class="hover:text-primary transition-colors">STATS</a>
+            <a href="#" class="hover:text-primary transition-colors">REWARDS</a>
+          </div>
+
+          <!-- Auth -->
+          <div class="flex items-center gap-4">
+            <button
+              class="text-sm font-bold text-secondary hover:text-primary transition-colors hidden sm:block"
+            >
+              LOG IN
+            </button>
+            <button
+              class="px-6 py-2.5 bg-primary text-white font-bold text-sm tracking-wide rounded-full hover:bg-secondary transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+            >
+              PLAY FREE
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- 1. HERO SECTION: Clean, Airy, Premium -->
+    <section
+      class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden bg-bg-lightGreen"
+    >
+      <!-- Abstract Background -->
+      <div class="absolute inset-0 bg-pattern pointer-events-none"></div>
+      <div
+        class="absolute top-0 right-0 w-[600px] h-[600px] bg-bg-custom rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3 pointer-events-none"
+      ></div>
+
+      <div
+        class="relative max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-16 items-center"
+      >
+        <!-- Left: Content -->
+        <div class="z-10 space-y-8">
+          <div
+            class="inline-flex items-center gap-2 px-4 py-2 border border-primary/20 bg-white rounded-full shadow-sm"
+          >
+            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            <span
+              class="text-xs font-bold text-secondary tracking-widest uppercase"
+              >Season 2025/26 Live</span
+            >
+          </div>
+
+          <h1
+            class="font-extrabold text-5xl lg:text-7xl leading-[1.1] text-heading"
+          >
+            BUILD YOUR <br />
+            <span class="text-gradient">DYNASTY.</span>
+          </h1>
+
+          <p
+            class="text-lg text-gray-text max-w-lg leading-relaxed border-l-4 border-primary pl-6"
+          >
+            The world's most immersive fantasy football platform. Scout elite
+            talent, analyze next-gen data, and compete for
+            <span class="text-secondary font-bold">£1,000,000</span> in prizes.
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-4 pt-4">
+            <button
+              class="px-10 py-4 bg-primary text-white font-bold text-lg tracking-widest rounded shadow-lg shadow-primary/30 hover:bg-secondary hover:shadow-secondary/30 hover:-translate-y-1 transition-all"
+            >
+              START SEASON
+            </button>
+            <button
+              class="px-10 py-4 bg-white border border-secondary/20 text-secondary font-bold text-lg tracking-widest rounded hover:bg-bg-paleCyan transition-all flex items-center gap-2 group shadow-sm"
+            >
+              VIEW PRIZES
+              <i
+                class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform text-primary"
+              ></i>
+            </button>
+          </div>
+
+          <!-- Mini Stats -->
+          <div class="flex items-center gap-10 pt-6 border-t border-gray-200">
+            <div>
+              <span class="font-bold text-3xl text-text-main block">11.5M</span>
+              <span
+                class="text-xs text-gray-text uppercase tracking-widest font-semibold"
+                >Managers</span
+              >
+            </div>
+            <div class="w-px h-10 bg-gray-300"></div>
+            <div>
+              <span class="font-bold text-3xl text-text-main block">2.4BN</span>
+              <span
+                class="text-xs text-gray-text uppercase tracking-widest font-semibold"
+                >Transfers</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: 3D Player Card (Light Version) -->
+        <div
+          class="relative h-[600px] w-full flex items-center justify-center perspective-[1200px]"
+        >
+          <div
+            class="absolute w-[500px] h-[500px] bg-bg-custom rounded-full blur-[80px] animate-pulse-slow"
+          ></div>
+
+          <div
+            class="relative w-[340px] h-[480px] bg-white rounded-2xl border border-gray-100 shadow-soft z-20 animate-float transform rotate-y-[-10deg] overflow-hidden group"
+          >
+            <div class="p-6 flex justify-between items-start z-20 relative">
+              <div class="flex flex-col">
+                <span class="font-bold text-5xl text-secondary">98</span>
+                <span
+                  class="text-xs font-bold text-primary uppercase tracking-wider"
+                  >OVR Rating</span
+                >
+              </div>
+              <i
+                class="fa-solid fa-bolt text-primary text-3xl drop-shadow-sm"
+              ></i>
+            </div>
+
+            <div
+              class="absolute bottom-0 left-1/2 -translate-x-1/2 h-[350px] w-full z-10"
+            >
+              <img
+                src="https://resources.premierleague.com/premierleague/photos/players/250x250/p223340.png"
+                class="w-full h-full object-cover"
+                alt="Haaland"
+              />
+            </div>
+
+            <div
+              class="absolute bottom-0 w-full p-4 bg-white/90 backdrop-blur-sm border-t border-gray-100 z-30"
+            >
+              <div class="flex justify-between text-center">
+                <div>
+                  <p class="text-[10px] text-gray-text uppercase">Points</p>
+                  <p class="font-bold text-xl text-heading">258</p>
+                </div>
+                <div>
+                  <p class="text-[10px] text-gray-text uppercase">Price</p>
+                  <p class="font-bold text-xl text-secondary">£14.2m</p>
+                </div>
+                <div>
+                  <p class="text-[10px] text-gray-text uppercase">Form</p>
+                  <p class="font-bold text-xl text-primary">9.2</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="absolute top-20 right-10 w-48 h-32 bg-white/70 backdrop-blur-md rounded-xl border border-gray-100 shadow-md z-50 animate-float"
+            style="animation-delay: 1s"
+          >
+            <div class="p-4">
+              <div class="flex items-center gap-2 mb-2">
+                <div
+                  class="w-2 h-2 bg-primary rounded-full animate-pulse"
+                ></div>
+                <span class="text-xs font-bold text-gray-text uppercase"
+                  >Market Value</span
+                >
+              </div>
+              <div class="font-bold text-2xl text-heading">£100.5M</div>
+              <div
+                class="w-full bg-gray-200 h-1 mt-2 rounded-full overflow-hidden"
+              >
+                <div class="w-3/4 h-full bg-primary"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. HOW TO DOMINATE -->
+    <section class="py-24 bg-white relative z-10">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <span
+            class="text-primary font-bold tracking-[0.2em] text-xs uppercase mb-2 block"
+            >Methodology</span
+          >
+          <h2
+            class="font-extrabold text-4xl text-heading uppercase tracking-tight"
+          >
+            How to Dominate
+          </h2>
+        </div>
+
+        <div class="grid md:grid-cols-4 gap-6">
+          <!-- Step 1 -->
+          <div
+            class="group bg-bg-paleCyan border border-transparent p-8 rounded-3xl hover:border-primary/30 hover:bg-white hover:shadow-soft transition-all duration-300"
+          >
+            <div
+              class="w-14 h-14 rounded-2xl bg-white border border-gray-100 flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform"
+            >
+              <i class="fa-solid fa-user-plus text-2xl text-secondary"></i>
+            </div>
+            <h3 class="font-bold text-xl text-heading mb-2">1. Register</h3>
+            <p class="text-sm text-gray-text font-medium">
+              Create your profile and access the global player database.
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div
+            class="group bg-bg-paleCyan border border-transparent p-8 rounded-3xl hover:border-primary/30 hover:bg-white hover:shadow-soft transition-all duration-300"
+          >
+            <div
+              class="w-14 h-14 rounded-2xl bg-white border border-gray-100 flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform"
+            >
+              <i class="fa-solid fa-shirt text-2xl text-primary"></i>
+            </div>
+            <h3 class="font-bold text-xl text-heading mb-2">2. Draft Squad</h3>
+            <p class="text-sm text-gray-text font-medium">
+              Use your £100m budget wisely. Balance stars and gems.
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div
+            class="group bg-bg-paleCyan border border-transparent p-8 rounded-3xl hover:border-primary/30 hover:bg-white hover:shadow-soft transition-all duration-300"
+          >
+            <div
+              class="w-14 h-14 rounded-2xl bg-white border border-gray-100 flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform"
+            >
+              <i class="fa-solid fa-users text-2xl text-secondary"></i>
+            </div>
+            <h3 class="font-bold text-xl text-heading mb-2">3. Join Leagues</h3>
+            <p class="text-sm text-gray-text font-medium">
+              Compete in global classics or private head-to-head leagues.
+            </p>
+          </div>
+
+          <!-- Step 4 -->
+          <div
+            class="group bg-bg-paleCyan border border-transparent p-8 rounded-3xl hover:border-primary/30 hover:bg-white hover:shadow-soft transition-all duration-300"
+          >
+            <div
+              class="w-14 h-14 rounded-2xl bg-white border border-gray-100 flex items-center justify-center mb-6 shadow-sm group-hover:scale-110 transition-transform"
+            >
+              <i class="fa-solid fa-trophy text-2xl text-primary"></i>
+            </div>
+            <h3 class="font-bold text-xl text-heading mb-2">4. Win Prizes</h3>
+            <p class="text-sm text-gray-text font-medium">
+              Top the leaderboards to claim cash, VIP trips, and hardware.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. SELECT YOUR MODE -->
+    <section class="py-24 bg-bg-offWhite">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <h2
+          class="font-extrabold text-4xl text-heading mb-12 border-l-4 border-secondary pl-4 uppercase"
+        >
+          Select Your Mode
+        </h2>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Classic -->
+          <div
+            class="relative group h-96 rounded-3xl overflow-hidden bg-white shadow-card hover:shadow-premium transition-all"
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-secondary/90 via-transparent to-transparent z-10"
+            ></div>
+            <!-- Placeholder Image -->
+            <div class="absolute inset-0 bg-gray-200">
+              <img
+                src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?q=80&w=2936&auto=format&fit=crop"
+                class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
+                alt="Classic"
+              />
+            </div>
+
+            <div class="absolute bottom-0 left-0 w-full p-8 z-20">
+              <span
+                class="bg-secondary text-white text-[10px] font-bold px-3 py-1 rounded-full mb-3 inline-block tracking-wider"
+                >MOST POPULAR</span
+              >
+              <h3 class="font-bold text-3xl text-white">CLASSIC</h3>
+              <p class="text-sm text-gray-100 mt-2 font-medium">
+                Global ranking. Standard rules.
+              </p>
+            </div>
+          </div>
+
+          <!-- Head to Head -->
+          <div
+            class="relative group h-96 rounded-3xl overflow-hidden bg-white shadow-card hover:shadow-premium transition-all"
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-red-bright/90 via-transparent to-transparent z-10"
+            ></div>
+            <div class="absolute inset-0 bg-gray-200">
+              <img
+                src="https://images.unsplash.com/photo-1560272564-c83b66b1ad12?q=80&w=2849&auto=format&fit=crop"
+                class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
+                alt="H2H"
+              />
+            </div>
+
+            <div class="absolute bottom-0 left-0 w-full p-8 z-20">
+              <span
+                class="bg-red-bright text-white text-[10px] font-bold px-3 py-1 rounded-full mb-3 inline-block tracking-wider"
+                >COMPETITIVE</span
+              >
+              <h3 class="font-bold text-3xl text-white">HEAD 2 HEAD</h3>
+              <p class="text-sm text-gray-100 mt-2 font-medium">
+                1v1 Battles. Knockout cups.
+              </p>
+            </div>
+          </div>
+
+          <!-- Draft -->
+          <div
+            class="relative group h-96 rounded-3xl overflow-hidden bg-white shadow-card hover:shadow-premium transition-all"
+          >
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-primary/90 via-transparent to-transparent z-10"
+            ></div>
+            <div class="absolute inset-0 bg-gray-200">
+              <img
+                src="https://images.unsplash.com/photo-1434648957308-5e6a859697e8?q=80&w=2874&auto=format&fit=crop"
+                class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700"
+                alt="Draft"
+              />
+            </div>
+
+            <div class="absolute bottom-0 left-0 w-full p-8 z-20">
+              <span
+                class="bg-primary text-white text-[10px] font-bold px-3 py-1 rounded-full mb-3 inline-block tracking-wider"
+                >HARDCORE</span
+              >
+              <h3 class="font-bold text-3xl text-white">DRAFT</h3>
+              <p class="text-sm text-white mt-2 font-medium">
+                Snake pick. No budgets. Unique squads.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. CHAMPIONS (Luxury Gradient Section) -->
+    <section class="py-32 relative overflow-hidden bg-luxury-gradient">
+      <!-- Overlay Texture -->
+      <div
+        class="absolute inset-0 bg-pattern opacity-10 pointer-events-none"
+      ></div>
+
+      <div class="relative z-10 max-w-7xl mx-auto px-6 text-center">
+        <h2
+          class="font-extrabold text-5xl md:text-6xl text-white mb-6 drop-shadow-md uppercase tracking-tight"
+        >
+          Champions Eat First
+        </h2>
+        <p class="text-white/90 mb-20 max-w-2xl mx-auto text-lg font-medium">
+          The stakes have never been higher. Compete for the ultimate hardware
+          and cash prizes.
+        </p>
+
+        <div
+          class="flex flex-col md:flex-row items-center md:items-end justify-center gap-8 perspective-[1000px]"
+        >
+          <!-- Silver -->
+          <div
+            class="order-2 md:order-1 relative w-72 h-80 bg-white rounded-2xl p-1 shadow-2xl transform hover:-translate-y-2 transition-all"
+          >
+            <div
+              class="h-full w-full bg-white rounded-xl p-6 flex flex-col items-center justify-between border border-gray-100"
+            >
+              <div
+                class="text-gray-text font-bold text-xl uppercase tracking-widest"
+              >
+                2nd Place
+              </div>
+              <i class="fa-solid fa-medal text-6xl text-gray-400"></i>
+              <div class="text-center">
+                <p class="text-secondary font-bold text-3xl">£50,000</p>
+                <p
+                  class="text-xs text-gray-text uppercase tracking-widest font-bold"
+                >
+                  Cash + VIP Trip
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- GOLD (Center) -->
+          <div
+            class="order-1 md:order-2 relative w-80 h-[450px] bg-gold-metallic rounded-2xl p-[3px] shadow-2xl transform hover:-translate-y-4 transition-all z-20"
+          >
+            <div
+              class="h-full w-full bg-white rounded-xl p-8 flex flex-col items-center justify-between relative overflow-hidden"
+            >
+              <div
+                class="absolute inset-0 bg-gradient-to-b from-gold/10 to-transparent"
+              ></div>
+              <div
+                class="text-gold font-black text-4xl z-10 uppercase tracking-widest"
+              >
+                Champion
+              </div>
+              <i
+                class="fa-solid fa-trophy text-8xl text-gold drop-shadow-md z-10"
+              ></i>
+              <div class="text-center z-10">
+                <p class="text-text-main font-extrabold text-5xl">£250k</p>
+                <p
+                  class="text-sm text-gray-text uppercase tracking-widest font-bold"
+                >
+                  Global Title + Hardware
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bronze -->
+          <div
+            class="order-3 md:order-3 relative w-72 h-80 bg-white rounded-2xl p-1 shadow-2xl transform hover:-translate-y-2 transition-all"
+          >
+            <div
+              class="h-full w-full bg-white rounded-xl p-6 flex flex-col items-center justify-between border border-gray-100"
+            >
+              <div
+                class="text-bronze font-bold text-xl uppercase tracking-widest text-[#CD7F32]"
+              >
+                3rd Place
+              </div>
+              <i class="fa-solid fa-medal text-6xl text-[#CD7F32]"></i>
+              <div class="text-center">
+                <p class="text-secondary font-bold text-3xl">£25,000</p>
+                <p
+                  class="text-xs text-gray-text uppercase tracking-widest font-bold"
+                >
+                  Cash + Merch
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. SCOUT INTEL -->
+    <section class="py-24 bg-bg-lightGreen">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="flex justify-between items-center mb-12">
+          <h2 class="font-extrabold text-4xl text-heading uppercase">
+            Scout Intel
+          </h2>
+          <a
+            href="#"
+            class="text-secondary text-sm font-bold hover:text-primary transition-colors uppercase tracking-widest border-b-2 border-secondary/20 pb-1"
+            >View Database →</a
+          >
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Data Card 1 -->
+          <div
+            class="bg-white rounded-3xl shadow-card hover:shadow-premium transition-all overflow-hidden group border border-gray-100"
+          >
+            <div
+              class="h-48 bg-bg-paleCyan p-6 flex items-end justify-center relative"
+            >
+              <!-- Simulated Bar Chart -->
+              <div class="flex gap-2 items-end h-24 w-full justify-center">
+                <div class="w-4 bg-primary/40 h-1/3 rounded-t"></div>
+                <div class="w-4 bg-secondary/40 h-2/3 rounded-t"></div>
+                <div class="w-4 bg-primary h-full rounded-t"></div>
+                <div class="w-4 bg-secondary h-1/2 rounded-t"></div>
+              </div>
+            </div>
+            <div class="p-8">
+              <span class="text-xs font-bold text-primary uppercase mb-2 block"
+                >Analysis</span
+              >
+              <h3
+                class="font-bold text-xl text-heading mb-2 group-hover:text-secondary transition-colors"
+              >
+                GW12 Differential Guide
+              </h3>
+              <p class="text-sm text-gray-text font-medium">
+                Low ownership gems that can boost your rank.
+              </p>
+            </div>
+          </div>
+
+          <!-- Data Card 2 -->
+          <div
+            class="bg-white rounded-3xl shadow-card hover:shadow-premium transition-all overflow-hidden group border border-gray-100"
+          >
+            <div class="h-48 bg-gray-light flex items-center justify-center">
+              <h3 class="font-black text-6xl text-gray-300">VS</h3>
+            </div>
+            <div class="p-8">
+              <span
+                class="text-xs font-bold text-secondary uppercase mb-2 block"
+                >Fixtures</span
+              >
+              <h3
+                class="font-bold text-xl text-heading mb-2 group-hover:text-secondary transition-colors"
+              >
+                Difficulty Rating
+              </h3>
+              <p class="text-sm text-gray-text font-medium">
+                Who has the easiest run of games next month?
+              </p>
+            </div>
+          </div>
+
+          <!-- Data Card 3 -->
+          <div
+            class="bg-white rounded-3xl shadow-card hover:shadow-premium transition-all overflow-hidden group border border-gray-100"
+          >
+            <div class="h-48 bg-red-bright/5 flex items-center justify-center">
+              <div class="bg-white px-4 py-2 rounded-lg shadow-sm">
+                <i
+                  class="fa-solid fa-user-injured text-red-bright text-2xl"
+                ></i>
+              </div>
+            </div>
+            <div class="p-8">
+              <span
+                class="text-xs font-bold text-red-bright uppercase mb-2 block"
+                >Updates</span
+              >
+              <h3
+                class="font-bold text-xl text-heading mb-2 group-hover:text-red-bright transition-colors"
+              >
+                Injury Report
+              </h3>
+              <p class="text-sm text-gray-text font-medium">
+                Key stars ruled out for the weekend clash.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. FINAL CTA -->
+    <section
+      class="py-32 relative overflow-hidden bg-white flex items-center justify-center"
+    >
+      <!-- Abstract Bg -->
+      <div class="absolute inset-0 bg-bg-custom opacity-50"></div>
+      <div
+        class="absolute top-0 right-0 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[80px]"
+      ></div>
+
+      <div class="relative z-10 text-center px-6">
+        <h2
+          class="font-extrabold text-6xl md:text-8xl text-heading mb-6 uppercase leading-none"
+        >
+          Prove Your <br /><span class="text-gradient">Intellect.</span>
+        </h2>
+        <p class="text-gray-text text-xl mb-12 max-w-xl mx-auto font-medium">
+          Join 11 million managers. One champion. The season is waiting.
+        </p>
+        <button
+          class="px-12 py-5 bg-secondary text-white font-bold text-2xl tracking-widest rounded-full hover:bg-primary transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+        >
+          CREATE SQUAD
+        </button>
+      </div>
+    </section>
+
+    <!-- FOOTER: Matched to Image Reference -->
+    <footer class="bg-bg-lightGreen pt-24 pb-12">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+          <!-- Col 1: Brand & Contact -->
+          <div class="col-span-1">
+            <div class="flex items-center gap-2 mb-6 cursor-pointer">
+              <div class="flex items-center gap-3">
+                <img src="Logo.png" width="150px" alt="" />
+              </div>
+            </div>
+
+            <p class="text-text-main font-medium mb-6">Help@gmail.com</p>
+
+            <div class="flex gap-4">
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-secondary transition-colors"
+                ><i class="fa-brands fa-facebook-f"></i
+              ></a>
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-secondary transition-colors"
+                ><i class="fa-brands fa-instagram"></i
+              ></a>
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center hover:bg-secondary transition-colors"
+                ><i class="fa-brands fa-linkedin-in"></i
+              ></a>
+            </div>
+          </div>
+
+          <!-- Col 2: Quick Links -->
+          <div class="col-span-1">
+            <h4 class="font-bold text-text-main text-lg mb-6">Quick Links</h4>
+            <ul class="space-y-4">
+              <li>
+                <a
+                  href="#"
+                  class="text-text-main hover:text-primary transition-colors"
+                  >Customer Support</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-text-main hover:text-primary transition-colors"
+                  >Delivery Details</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-text-main hover:text-primary transition-colors"
+                  >Terms & Conditions</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-text-main hover:text-primary transition-colors"
+                  >Privacy Policy</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Col 3: Quick Links (Duplicate from Image) -->
+          <div class="col-span-1">
+            <h4 class="font-bold text-text-main text-lg mb-6">Quick Links</h4>
+            <ul class="space-y-4">
+              <li>
+                <a
+                  href="#"
+                  class="text-text-main hover:text-primary transition-colors"
+                  >Customer Support</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-text-main hover:text-primary transition-colors"
+                  >Delivery Details</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-text-main hover:text-primary transition-colors"
+                  >Terms & Conditions</a
+                >
+              </li>
+              <li>
+                <a
+                  href="#"
+                  class="text-text-main hover:text-primary transition-colors"
+                  >Privacy Policy</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Col 4: Help & Newsletter -->
+          <div class="col-span-1">
+            <h4 class="font-bold text-text-main text-lg mb-6">Help</h4>
+            <ul class="space-y-4 mb-6">
+              <li>
+                <a
+                  href="#"
+                  class="text-text-main hover:text-primary transition-colors"
+                  >Customer Support</a
+                >
+              </li>
+            </ul>
+
+            <!-- Newsletter Input -->
+            <div class="relative">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                class="w-full bg-primary text-white placeholder-white px-6 py-3 rounded-full outline-none border-none shadow-sm"
+              />
+              <button
+                class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center text-white"
+              >
+                <i class="fa-regular fa-envelope"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

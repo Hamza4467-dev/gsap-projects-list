@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>merge two array in js (while ) loop</title>
+</head>
+
+<body>
+
+  <script>
+    let a = [5, 2, 3];
+    let b = [4, 1, 6];
+    let c = []
+    let a1 = 0;
+    let b1 = 0;
+    let c1 = 0;
+    while (a1 < a.length && b1 < b.length) {
+      if (a[a1] < b[b1]) {
+        c[c1] = a[a1];
+        a1++;
+      } else {
+        c[c1] = b[b1];
+        b1++;
+      }
+      c1++;
+    }
+    while (a1 < a.length) {
+      c[c1] = a[a1]
+      a1++;
+      c1++
+
+    }
+    console.warn(c1)
+
+  </script>
+</body>
+
+</html>

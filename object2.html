@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimized Content</title>
+    <style>
+        :root {
+            --primary-dark: #0c244c;
+            --primary: #0c244cf0;
+            --secondary: #63c5f1;
+            --accent: #49a8fa;
+            --warning: #ed2f6b;
+            --text-color: #0c244ce8;
+            --background-color: #f6f8fa;
+            --content-bg: #ffffff;
+            --border-color: #dcdfe6;
+        }
+
+        body {
+            font-family: "Open Sans", sans-serif;
+            background-color: var(--background-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .outer-container {
+       background-color: #f1fef4;
+            width: 100%;
+            height: 100%;
+       
+            padding: 20px;
+            max-width: 500px;
+
+        }
+
+        .container {
+            background-color: var(--content-bg);
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-dark);
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .section {
+            margin-bottom: 15px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .content-box {
+            background-color: var(--background-color);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--primary-dark);
+     
+        }
+
+        .optimized {
+            background-color: #f1fef4;
+        }
+
+        .buttons {
+            display: flex
+;
+    /* justify-content: space-between; */
+    margin-top: 20px;
+    justify-content: end;
+        }
+
+        .btn {
+         
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-align: center;
+            margin: 0 5px;
+        }
+
+        .btn-approve {
+            background-color: var(--accent);
+            color: #ffffff;
+        }
+
+        .btn-approve:hover {
+            background-color: var(--primary);
+        }
+
+        .btn-reject {
+            background-color: var(--warning);
+            color: #ffffff;
+        }
+
+        .btn-reject:hover {
+            background-color: #b50070;
+        }
+
+        .btn-rewrite {
+            background-color: var(--secondary);
+            color: #ffffff;
+        }
+
+        .btn-rewrite:hover {
+            background-color: #479ec4;
+        }
+    </style>
+</head>
+<body>
+    <div class="outer-container">
+        <div class="title">Optimized Content</div>
+        <div class="container">
+   
+
+            <div class="section">
+                <div class="section-title">Current Version:</div>
+                <div class="content-box">Senior Software Engineer | Full Stack Developer | Cloud Architecture</div>
+            </div>
+
+            <div class="section">
+                <div class="section-title" style="color: #65ba7c;">Optimized Version:</div>
+                <div class="content-box optimized">Senior Full Stack Engineer | AWS Cloud Expert | Leading 1M+ User Applications</div>
+            </div>
+
+            <div class="buttons">
+                <button class="btn btn-approve">Approve</button>
+                <button class="btn btn-reject">Reject</button>
+                <button class="btn btn-rewrite">Rewrite</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>in direct Recursion</title>
+
+  <script>
+    let rs = 100;
+    let totalApple = 0
+    function buyapple(reciveMoney) {
+      // console.log(reciveMoney)
+      if (reciveMoney > 0) {
+        buyMore(reciveMoney)
+      }
+      else {
+        console.log("i dont have more money", totalApple)
+      }
+    }
+    function buyMore(reciveMoney) {
+      totalApple++
+      buyapple(reciveMoney - 20)
+      // console.log("buy more", reciveMoney)
+    }
+    buyapple(rs)
+  </script>
+</head>
+
+<body>
+
+</body>
+
+</html>

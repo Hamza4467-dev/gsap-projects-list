@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invoice</title>
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@500;700&family=Open+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Remix Icons -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --accent: #0c244c;
+        --light-gray: #f3f4f6;
+        --border-gray: #e5e7eb;
+        --success: #16a34a;
+        --warning: #d97706;
+        --danger: #dc2626;
+      }
+
+      body {
+        font-family: "Open Sans", sans-serif;
+        background: #fff;
+        margin: 0;
+        padding: 40px;
+        color: #111827;
+        line-height: 1.6;
+        max-width: 900px;
+        margin: auto;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      .logo,
+      .invoice-title {
+        font-family: "Roboto", sans-serif;
+      }
+
+      .invoice-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 20px;
+        margin-bottom: 28px;
+        border-radius: 8px;
+
+        color: #fff;
+        background: linear-gradient(
+          135deg,
+          rgb(136, 68, 129) 0%,
+          rgb(102, 196, 240) 100%
+        );
+        padding: 16px 24px;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: #0000001a 0 4px 12px;
+      }
+      .logo img {
+        width: 160px;
+        filter: brightness(0) invert(1);
+      }
+      .invoice-header-right {
+        text-align: right;
+      }
+      .invoice-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0;
+        color: #fff;
+      }
+      .badge-category {
+        background: #fff;
+        color: var(--accent);
+        font-size: 12px;
+        padding: 3px 8px;
+        border-radius: 12px;
+        margin-left: 8px;
+      }
+      .invoice-meta {
+        margin-top: 6px;
+        font-size: 14px;
+        color: #fff;
+      }
+
+      .status-badge {
+        font-size: 12px;
+        padding: 3px 17px;
+        border-radius: 6px;
+        font-weight: 700;
+        margin-top: 10px;
+        display: inline-block;
+        color: #fff;
+      }
+      .status-paid {
+        background: var(--success);
+      }
+      .status-pending {
+        background: var(--warning);
+      }
+      .status-overdue {
+        background: var(--danger);
+      }
+
+      .info-section {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 28px;
+      }
+      .card-box {
+        flex: 1;
+        background: var(--light-gray);
+        border: 1px solid var(--border-gray);
+        border-radius: 8px;
+        padding: 18px;
+      }
+      .card-box h3 {
+        margin: 0 0 6px;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--accent);
+        text-transform: uppercase;
+      }
+      .card-box p {
+        margin: 0 0 6px;
+        font-size: 14px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 16px;
+      }
+      table thead th {
+        font-weight: 700;
+        padding: 12px 10px;
+        font-size: 15px;
+        text-align: left;
+        border-bottom: 2px solid var(--border-gray);
+      }
+      table thead th.text-right,
+      table tbody td.text-right {
+        text-align: right;
+      }
+      table tbody td {
+        padding: 12px 10px;
+        border-bottom: 1px solid var(--border-gray);
+        font-size: 14px;
+      }
+      table tbody tr:nth-child(even) {
+        background: #fafafa;
+      }
+
+      .summary {
+        max-width: 320px;
+        margin-left: auto;
+        margin-bottom: 25px;
+      }
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 0;
+        font-size: 15px;
+      }
+      .grand-total {
+        background: var(--accent);
+        color: #fff;
+        font-weight: 700;
+        font-size: 18px;
+        padding: 12px 14px;
+        border-radius: 6px;
+        margin-top: 10px;
+      }
+
+      .actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 15px;
+        margin-bottom: 30px;
+      }
+      .btn {
+        padding: 12px 22px;
+        font-size: 15px;
+        font-weight: 600;
+        border-radius: 6px;
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.3s ease;
+      }
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          rgb(102, 196, 240) 0%,
+          rgb(29, 43, 75) 100%
+        );
+        border: none;
+        color: #fff;
+        box-shadow: #1d2b4b33 0 4px 8px;
+        color: #fff;
+        border: none;
+      }
+      .btn-primary:hover {
+        background: linear-gradient(
+          135deg,
+          rgb(29, 43, 75) 0%,
+          rgb(102, 196, 240) 100%
+        );
+        box-shadow: #1d2b4b4d 0 6px 12px;
+      }
+      .btn-secondary {
+        background: #fff;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+      }
+      .btn-secondary:hover {
+        background: #f1f5f9;
+      }
+
+      /* Footer */
+      .footer {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px 30px;
+        font-size: 14px;
+        gap: 20px;
+        border-radius: 8px;
+        background: var(--light-gray);
+        margin-top: 20px;
+        box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.05);
+      }
+      .footer h4 {
+        margin: 0;
+        margin-bottom: 6px;
+        color: var(--accent);
+        font-size: 18px;
+        font-weight: 700;
+      }
+      .footer ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .footer li {
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 14px;
+      }
+      .footer li:last-child {
+        margin-bottom: 0;
+      }
+      .footer p {
+        margin: 0;
+        margin-bottom: 6px;
+        font-size: 14px;
+      }
+      .footer p:last-child {
+        margin-bottom: 0;
+      }
+      .footer p span {
+        font-size: 14px;
+      }
+      .account {
+        font-weight: 700;
+        font-size: 14px;
+        color: var(--accent);
+      }
+
+      @media (max-width: 700px) {
+        .info-section,
+        .footer {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section class="invoice-wrapper">
+      <div class="invoice-header">
+        <div class="logo">
+          <img src="https://alpha.oroai.co/assets/oro-logo.png" alt="logo" />
+        </div>
+        <div class="invoice-header-right">
+          <h1 class="invoice-title">
+            Dial Direct Invoice
+            <span class="badge-category">Monthly</span>
+          </h1>
+          <div class="invoice-meta">
+            Invoice No: <strong>#INV-12345</strong> | Date:
+            <strong>20 May 2024</strong>
+          </div>
+          <div class="status-badge status-paid">PAID</div>
+        </div>
+      </div>
+
+      <div class="info-section">
+        <div class="card-box">
+          <h3>Invoice From</h3>
+          <p>ABC Company Ltd</p>
+          <p>123 Business Road</p>
+          <p>City, Country</p>
+          <p>Email: support@abc.com</p>
+        </div>
+        <div class="card-box">
+          <h3>Invoice To</h3>
+          <p>John Doe</p>
+          <p>789 Client Street</p>
+          <p>City, Country</p>
+          <p>Email: john@example.com</p>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>S.No</th>
+            <th>Description</th>
+            <th class="text-right">Qty</th>
+            <th class="text-right">Price</th>
+            <th class="text-right">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Interview Module</td>
+            <td class="text-right">10</td>
+            <td class="text-right">$50</td>
+            <td class="text-right">$500</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="summary">
+        <div class="summary-row">
+          <span>Sub Total:</span>
+          <span>$620</span>
+        </div>
+        <div class="summary-row">
+          <span>Tax (10%):</span>
+          <span>$62</span>
+        </div>
+        <div class="grand-total summary-row">
+          <span>Grand Total:</span>
+          <span>$682</span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary">
+          <i class="ri-bank-card-line"></i> Pay Now
+        </button>
+        <button class="btn btn-secondary">
+          <i class="ri-download-2-line"></i> Download
+        </button>
+      </div>
+
+      <div class="footer">
+        <div class="contact">
+          <h4>Contact Us</h4>
+          <ul>
+            <li><i class="ri-phone-line"></i> +123 456 7890</li>
+            <li><i class="ri-mail-line"></i> info@abc.com</li>
+            <li><i class="ri-map-pin-line"></i> 123 Business Road, City</li>
+          </ul>
+        </div>
+        <div class="payment">
+          <h4>Payment Info</h4>
+          <p><span class="account">Account Name:</span> William Peter</p>
+          <p>
+            <span class="account">Account No:</span>
+            <span style="font-weight: 700">123456789</span>
+          </p>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recursion| Data Structur </title>
+
+  <script>
+    // function apple(a) {
+    //   console.log(a)
+    //   if (a <= 20) {
+    //     apple(a + 1)
+    //   }
+
+
+    // }
+    // apple(10)
+
+    // factorial
+    // function factorial(a) {
+    //   if (a == 0) {
+    //     return 1
+    //   }
+    //   return a * factorial(a - 1)
+    // }
+    // console.log(factorial(5))
+
+
+
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background-color: #f0f5f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      width: 600px;
+      height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px;
+      background: linear-gradient(135deg, #66cc8a, #5a98d1);
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+      animation: fadeInCard 1.5s ease-out forwards;
+    }
+
+    .player-info {
+      color: #fff;
+      animation: slideInLeft 1s ease-out forwards;
+    }
+
+    .player-info h1 {
+      font-size: 60px;
+    }
+
+    .player-info h2 {
+      font-size: 30px;
+    }
+
+    .player-info h3 {
+      font-size: 20px;
+    }
+
+    .player-img {
+      animation: zoomIn 1s ease-out forwards;
+    }
+
+    .player-img img {
+      width: 250px;
+      border-radius: 50%;
+      border: 5px solid #fff;
+    }
+
+    /* Stats Section */
+    .stats {
+      background-color: #52437b;
+      border-radius: 15px;
+      color: #fff;
+      padding: 20px;
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      align-items: center;
+      animation: slideUp 1.2s ease-out forwards;
+    }
+
+    .stats div {
+      text-align: center;
+    }
+
+    /* Keyframes for Animations */
+    @keyframes fadeInCard {
+      0% {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes zoomIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes slideInLeft {
+      0% {
+        opacity: 0;
+        transform: translateX(-100px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(100px);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Card Design</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <div class="card">
+      <div class="player-info">
+        <h1>17</h1>
+        <h2>CHARLES</h2>
+        <h3>OF KETELAERE</h3>
+      </div>
+      <div class="player-img">
+        <img src="https://via.placeholder.com/150" alt="Player Image">
+      </div>
+      <div class="stats">
+        <div>
+          <h4>785</h4>
+          <p>MINUTES PLAYED</p>
+        </div>
+        <div>
+          <h4>11</h4>
+          <p>ATTENDANCES</p>
+        </div>
+        <div>
+          <h4>2</h4>
+          <p>GOAL</p>
+        </div>
+        <div>
+          <h4>5</h4>
+          <p>ASSIST</p>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  </html>
+
+</body>
+
+
+</html>

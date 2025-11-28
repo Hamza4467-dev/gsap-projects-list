@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Full Stack Developer | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Syne:wght@400;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* --- CORE VARIABLES --- */
+      :root {
+        --bg: #050505;
+        --text-main: #e0e0e0;
+        --text-muted: #888888;
+        --accent: #6d28d9; /* Deep Purple */
+        --accent-glow: #c084fc; /* Light Purple */
+        --secondary: #06b6d4; /* Cyan */
+
+        --glass-bg: rgba(255, 255, 255, 0.03);
+        --glass-border: rgba(255, 255, 255, 0.05);
+        --card-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+
+        --font-display: "Syne", sans-serif;
+        --font-body: "Space Grotesk", sans-serif;
+      }
+
+      /* --- RESET & BASE --- */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        cursor: none; /* Custom cursor */
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: var(--bg);
+        color: var(--text-main);
+        font-family: var(--font-body);
+        overflow-x: hidden;
+        line-height: 1.6;
+      }
+
+      /* --- CUSTOM CURSOR --- */
+      .cursor-dot,
+      .cursor-outline {
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        z-index: 9999;
+        pointer-events: none;
+      }
+      .cursor-dot {
+        width: 8px;
+        height: 8px;
+        background-color: white;
+      }
+      .cursor-outline {
+        width: 40px;
+        height: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        transition: width 0.2s, height 0.2s, background-color 0.2s;
+      }
+      body:hover .cursor-outline {
+        width: 50px;
+        height: 50px;
+      }
+
+      /* --- BACKGROUND FX --- */
+      .noise-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('data:image/svg+xml;utf8,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.05"/%3E%3C/svg%3E');
+        pointer-events: none;
+        z-index: 9000;
+      }
+
+      .blob {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        z-index: -1;
+        opacity: 0.6;
+        animation: float 10s infinite ease-in-out;
+      }
+      .blob-1 {
+        width: 400px;
+        height: 400px;
+        background: var(--accent);
+        top: -10%;
+        left: -10%;
+      }
+      .blob-2 {
+        width: 300px;
+        height: 300px;
+        background: var(--secondary);
+        bottom: 20%;
+        right: -5%;
+        animation-delay: 2s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translate(0, 0);
+        }
+        50% {
+          transform: translate(30px, 50px);
+        }
+      }
+
+      /* --- LAYOUT UTILS --- */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      /* --- NAV --- */
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2rem 0;
+        mix-blend-mode: difference;
+      }
+      .logo {
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: 1.5rem;
+        letter-spacing: -1px;
+      }
+      .nav-links a {
+        margin-left: 2rem;
+        text-decoration: none;
+        color: var(--text-main);
+        font-size: 0.9rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: white;
+        transform: translateX(-100%);
+        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+      }
+      .nav-links a:hover::after {
+        transform: translateX(0);
+      }
+
+      /* --- HERO SECTION --- */
+      .hero {
+        height: 90vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+      }
+      h1 {
+        font-family: var(--font-display);
+        font-size: clamp(3rem, 8vw, 7rem);
+        font-weight: 800;
+        line-height: 0.9;
+        letter-spacing: -2px;
+        background: linear-gradient(to right, #fff, #a5a5a5);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 2rem;
+      }
+      .hero p {
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        color: var(--text-muted);
+        max-width: 500px;
+        margin-bottom: 3rem;
+      }
+      .cta-btn {
+        display: inline-block;
+        padding: 1rem 2.5rem;
+        background: white;
+        color: black;
+        font-weight: 700;
+        text-decoration: none;
+        border-radius: 2px;
+        transition: transform 0.2s;
+      }
+      .cta-btn:hover {
+        transform: scale(1.05) rotate(-1deg);
+      }
+
+      /* --- SCROLL MARQUEE (STACK) --- */
+      .marquee {
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border-top: 1px solid var(--glass-border);
+        border-bottom: 1px solid var(--glass-border);
+        padding: 2rem 0;
+        overflow: hidden;
+        white-space: nowrap;
+        position: relative;
+      }
+      .track {
+        display: inline-block;
+        animation: marquee 20s linear infinite;
+      }
+      .track span {
+        font-family: var(--font-display);
+        font-size: 4rem;
+        font-weight: 800;
+        color: rgba(255, 255, 255, 0.05);
+        margin-right: 4rem;
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
+      }
+      @keyframes marquee {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* --- PROJECTS (3D CARDS) --- */
+      .work-section {
+        padding: 10rem 0;
+      }
+      .section-header {
+        font-family: var(--font-display);
+        font-size: 3rem;
+        margin-bottom: 4rem;
+        border-left: 4px solid var(--secondary);
+        padding-left: 1rem;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 3rem;
+      }
+
+      .card {
+        background: var(--glass-bg);
+        border: 1px solid var(--glass-border);
+        border-radius: 16px;
+        padding: 2rem;
+        position: relative;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        backdrop-filter: blur(20px);
+      }
+      .card:hover {
+        transform: translateY(-10px) scale(1.02);
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 0 30px rgba(109, 40, 217, 0.15);
+      }
+      .card-img {
+        height: 200px;
+        background: #111;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        overflow: hidden;
+        position: relative;
+      }
+      /* Placeholder for project image visual */
+      .card-img::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(45deg, var(--accent), transparent);
+        opacity: 0.2;
+      }
+
+      .card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+      }
+      .card p {
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+      }
+      .tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+      .tag {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.75rem;
+        border: 1px solid var(--glass-border);
+        border-radius: 50px;
+        color: var(--secondary);
+      }
+
+      /* --- CONTACT --- */
+      .contact-section {
+        padding: 10rem 0 5rem;
+        text-align: center;
+      }
+      .huge-link {
+        font-family: var(--font-display);
+        font-size: clamp(2rem, 6vw, 5rem);
+        font-weight: 800;
+        color: var(--text-main);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      .huge-link:hover {
+        color: var(--accent-glow);
+      }
+
+      /* --- REVEAL ANIMATION CLASS --- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease-out;
+      }
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* --- MOBILE --- */
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+        }
+        .cursor-dot,
+        .cursor-outline {
+          display: none;
+        }
+        * {
+          cursor: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NOISE TEXTURE OVERLAY -->
+    <div class="noise-overlay"></div>
+
+    <!-- CUSTOM CURSOR -->
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
+
+    <!-- DECORATIVE BLOBS -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="container">
+      <header>
+        <nav>
+          <div class="logo">DEV.</div>
+          <div class="nav-links">
+            <a href="#work">Work</a>
+            <a href="#stack">Stack</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </nav>
+      </header>
+
+      <section class="hero">
+        <h1 class="reveal">
+          Engineered for <br />
+          Impact & Scale.
+        </h1>
+        <p class="reveal">
+          Senior Full Stack Engineer bridging the gap between complex backend
+          logic and fluid, intuitive user interfaces.
+        </p>
+        <div class="reveal">
+          <a href="#work" class="cta-btn">View Projects</a>
+        </div>
+      </section>
+    </div>
+
+    <!-- INFINITE SCROLL STACK -->
+    <section id="stack" class="marquee">
+      <div class="track">
+        <span
+          >REACT // NODE // TYPESCRIPT // NEXT.JS // AWS // GRAPHQL //
+          POSTGRESQL // TAILWIND // DOCKER // REACT // NODE // TYPESCRIPT</span
+        >
+      </div>
+    </section>
+
+    <div class="container">
+      <section id="work" class="work-section">
+        <h2 class="section-header reveal">Selected Works</h2>
+        <div class="grid">
+          <!-- Project 1 -->
+          <article class="card reveal">
+            <div class="card-img"></div>
+            <h3>FinTech Dashboard</h3>
+            <p>
+              Real-time data visualization platform handling millions of
+              websocket events with sub-second latency.
+            </p>
+            <div class="tags">
+              <span class="tag">Vue 3</span>
+              <span class="tag">D3.js</span>
+              <span class="tag">Go</span>
+            </div>
+          </article>
+
+          <!-- Project 2 -->
+          <article class="card reveal">
+            <div class="card-img"></div>
+            <h3>E-Commerce headless</h3>
+            <p>
+              A high-performance headless Shopify build with Next.js, achieving
+              100/100 Lighthouse scores.
+            </p>
+            <div class="tags">
+              <span class="tag">Next.js</span>
+              <span class="tag">GraphQL</span>
+              <span class="tag">Redis</span>
+            </div>
+          </article>
+
+          <!-- Project 3 -->
+          <article class="card reveal">
+            <div class="card-img"></div>
+            <h3>AI SaaS Platform</h3>
+            <p>
+              Full stack implementation of a generative AI tool integration with
+              custom model fine-tuning backend.
+            </p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">FastAPI</span>
+              <span class="tag">React</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact" class="contact-section reveal">
+        <p style="color: var(--secondary); margin-bottom: 1rem">
+          Let's build the future
+        </p>
+        <a href="mailto:hello@example.com" class="huge-link"
+          >hello@example.com</a
+        >
+        <footer
+          style="margin-top: 4rem; color: var(--text-muted); font-size: 0.8rem"
+        >
+          &copy; 2025 Full Stack Portfolio. Crafted with code.
+        </footer>
+      </section>
+    </div>
+
+    <script>
+      // --- 1. CUSTOM CURSOR LOGIC ---
+      const cursorDot = document.querySelector("[data-cursor-dot]");
+      const cursorOutline = document.querySelector("[data-cursor-outline]");
+
+      window.addEventListener("mousemove", function (e) {
+        const posX = e.clientX;
+        const posY = e.clientY;
+
+        // Dot follows instantly
+        cursorDot.style.left = `${posX}px`;
+        cursorDot.style.top = `${posY}px`;
+
+        // Outline follows with delay (animate method)
+        cursorOutline.animate(
+          {
+            left: `${posX}px`,
+            top: `${posY}px`,
+          },
+          { duration: 500, fill: "forwards" }
+        );
+      });
+
+      // --- 2. HOVER EFFECTS FOR CURSOR ---
+      const links = document.querySelectorAll("a, .card");
+      links.forEach((link) => {
+        link.addEventListener("mouseenter", () => {
+          cursorOutline.style.transform = "translate(-50%, -50%) scale(1.5)";
+          cursorOutline.style.backgroundColor = "rgba(255,255,255,0.1)";
+        });
+        link.addEventListener("mouseleave", () => {
+          cursorOutline.style.transform = "translate(-50%, -50%) scale(1)";
+          cursorOutline.style.backgroundColor = "transparent";
+        });
+      });
+
+      // --- 3. SCROLL REVEAL ANIMATION (INTERSECTION OBSERVER) ---
+      const revealElements = document.querySelectorAll(".reveal");
+
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active");
+            }
+          });
+        },
+        {
+          threshold: 0.15,
+          rootMargin: "0px 0px -50px 0px",
+        }
+      );
+
+      revealElements.forEach((el) => revealObserver.observe(el));
+
+      // --- 4. PARALLAX EFFECT FOR BLOBS (PERFORMANCE OPTIMIZED) ---
+      document.addEventListener("mousemove", (e) => {
+        const x = (window.innerWidth - e.pageX * 2) / 100;
+        const y = (window.innerHeight - e.pageY * 2) / 100;
+
+        // Use requestAnimationFrame for performance
+        requestAnimationFrame(() => {
+          document.querySelector(
+            ".blob-1"
+          ).style.transform = `translate(${x}px, ${y}px)`;
+          document.querySelector(
+            ".blob-2"
+          ).style.transform = `translate(${-x}px, ${-y}px)`;
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Load Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      body {
+        background-color: black;
+      }
+      .font-poppins {
+        font-family: "Poppins", sans-serif;
+      }
+      .box {
+        width: 300px;
+        height: 300px;
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .progress {
+        width: 300px;
+        height: 20px;
+        background-color: #e0e0e0;
+        border-radius: 25px;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+      }
+      .flex {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        gap: 10px;
+      }
+      .btn {
+        padding: 10px 20px;
+        background-color: #4a90e2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        display: flex;
+        justify-content: center;
+        margin: auto;
+        margin-top: 40px;
+      }
+      .progress-bar {
+        width: 0;
+        height: 100%;
+        background-color: #4a90e2;
+        border-radius: 25px;
+        transition: width 0.3s ease-in-out;
+      }
+      #a {
+        color: red;
+        font-size: 50px;
+        text-align: center;
+        font-weight: 600;
+      }
+      #b {
+        color: blue;
+        font-size: 30px;
+        text-align: center;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <div class="flex">
+      <div class="progress">
+        <div class="progress-bar"></div>
+      </div>
+      <div class="progress-text">0%</div>
+    </div>
+    <button class="btn">DownLoad</button> -->
+
+    <!-- <h1 id="a">Hello guyz</h1>
+    <img src="121.png" alt="" / id="one">
+    <button class="btn">Swap Image</button>
+    <img src="Background.png" alt="" / id="two"> -->
+    <input type="text" value="name" name="name" id="input" />
+    <button id="btn" style="background-color: #4a90e2">Get Value</button>
+
+    <script src="index.js"></script>
+  </body>
+</html>

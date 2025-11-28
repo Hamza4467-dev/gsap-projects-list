@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Push and Pop operations</title>
+  <script>
+    let data=[]
+let currentValue=data.length;
+let max=5
+function pushData(newVlaue){
+  if(currentValue.length >= max){
+    alert("stack is full")
+  }
+
+  data[currentValue]=newVlaue
+currentValue+=1
+
+}
+function pop(){
+  if(currentValue >0){
+    currentValue -=1
+    data.length=currentValue
+  }
+  else{
+    alert("stack is already empty")
+  }
+}
+
+
+pushData(20)
+pushData(20)
+pushData(20)
+pop()
+pop()
+pop()
+
+
+console.log(data)
+  </script>
+</head>
+<body>
+  
+</body>
+</html>

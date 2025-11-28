@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>search elem in array</title>
+</head>
+
+<body>
+  <input type=" number" placeholder="enter a number for search element " id="searchItem">
+  <button type="button" onclick="search()">Search elem</button>
+
+  <script>
+
+
+    function search() {
+      var searchItem = document.getElementById('searchItem').value
+      const arry = [1, 32, 45, 67, 8, 345, 75]
+
+      let index = undefined
+      for (let i = 0; i < arry.length - 1; i++) {
+        if (arry[i] == parseInt(searchItem)) {
+          index = i
+        }
+
+      }
+      console.log(index)
+    }
+
+
+  </script>
+</body>
+
+</html>
